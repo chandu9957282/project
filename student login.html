@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ONLINE READING | E-Book</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1a1a2e;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { color: #4CAF50; }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Hero */
+    #home {
+      background: #16213e;
+      color: white;
+      text-align: center;
+      padding: 50px 100px;
+    }
+    #home h2 { font-size: 2rem; margin-bottom: 1px; }
+
+    /* Categories */
+    #categories {
+      background: #fff;
+    }
+    #categories h2 { text-align: center; margin-bottom: 10px; }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(2px, 1fr));
+      gap: 20px;
+    }
+    .category {
+      background: #eee;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+    .category:hover { transform: scale(1.05); background: #ddd; }
+
+    /* Books Section */
+    #books h2 { text-align: center; margin-bottom: 10px; }
+    .library {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .book-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .book {
+      width: 200px;
+      height: 270px;
+      perspective: 2000px;
+      position: relative;
+    }
+    .page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: left;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+      border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      background: white;
+    }
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 5px;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+    .front { background: #fff; }
+    .back { background: #f0f0f0; transform: rotateY(180deg); }
+    .page.flipped { transform: rotateY(-180deg); z-index: 0; }
+
+    .page:nth-child(1) { z-index: 10;}
+    .page:nth-child(2) { z-index: 9; }
+    .page:nth-child(3) { z-index: 8; }
+    .page:nth-child(4) { z-index: 7; }
+    .page:nth-child(5) { z-index: 6; }
+    .page:nth-child(6) { z-index: 5; }
+    .page:nth-child(7) { z-index: 4; }
+    .page:nth-child(8) { z-index: 3; }
+    .page:nth-child(9) { z-index: 2; }
+    .page:nth-child(10) { z-index: 1;}
+
+    .controls { display: flex; gap: 10px; }
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #1a1a2e;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover { background: #0f3460; }
+
+    .cover {
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center;
+      text-align: center;
+    }
+    .cover img { width: 60%; height: 50%; border-radius: 5px; }
+    .cover h3 { margin: 10px 0 5px; }
+    .cover h4 { margin: 0 0 15px; font-weight: normal; color: #555; }
+
+    footer {
+      background-color: #1a1a2e;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ONLINE READING</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#books">Books</a>
+      <a href="student.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <h2>Welcome to ONLINE READING</h2>
+    <p>Explore and read thousands of free e-books online.</p>
+  </section>
+
+  <!-- Categories Section -->
+  <section id="categories">
+    <h2>Categories</h2>
+    <div class="category-grid">
+      <div class="category" onclick="filterBooks('fiction')">Fiction</div>
+      <div class="category" onclick="filterBooks('science')">Science</div>
+      <div class="category" onclick="filterBooks('history')">History</div>
+      <div class="category" onclick="filterBooks('technology')">Technology</div>
+      <div class="category" onclick="filterBooks('all')">All</div>
+    </div>
+  </section>
+
+  <!-- Books Section (Flipbook) -->
+  <section id="books">
+    <h2>Featured Books</h2>
+    <div class="library">
+      
+      <!-- Book 1 -->
+      <div class="book-container" data-category="Fiction">
+        <div class="book" id="book1">
+          <div class="page">
+            <div class="front cover">
+              <img src="the voilent tom.jpg" alt="Book 1 Cover">
+              <h3>The Violet and the Tom</h3>
+              <h4>Eve Ocotillo</h4>
+              <button onclick="readNow('book1')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>The Violet and the Tom</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>My first taste of what it meant to be the slave of royalty came at his feet. The smooth pungency of a well-aged cheese placed carelessly between my lips.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>The fragrant sugar of a ripe summer peach, with the salt from the cheese—or was that simply his skin?—still lingering on his fingertips.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>It was solstice feast and I knelt beside him, my eyes trained only towards the floor or at his fingers, back straight, hands folded in my lap just so.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>Demure, and quietly alluring…or so I hoped. Because I truly did want him pleased—to believe me worth the price the King had paid.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>He seemed to have calmed since I'd been presented to him. At least, rage no longer vibrated from his frame.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>I was hopeful that he'd come to accept me—once he took the trouble to actually look at me. Eros, he was beautiful,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>and I was yet giddy with the thought, nibbling memories of the glances I'd stolen, wondering at my good fortune.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>Because although we exist only for our masters' pleasure, that existence is so much more pleasant when the man isn't a doddering, indolent gourmand.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>This man was still young, forty years, give or take, the lines around his eyes still faint, the merest touch of gray at his temples.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>He was darker than most men of the Isles and I wondered if exotic blood ran in his veins. Though several cents shorter than I, he was feline-sleek.</p></div><div class="back"></div></div>
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book1')">Previous</button>
+          <button onclick="nextPage('book1')">Next</button>
+        </div>
+      </div>
+
+      <!-- Book 2 -->
+      <div class="book-container" data-category="Science">
+        <div class="book" id="book2">
+          <div class="page">
+            <div class="front cover">
+              <img src="From the earth to moon.jpg" alt="Book 2 Cover">
+              <h3>From the Earth to the Moon</h3>
+              <h4>Jules Verne</h4>
+              <button onclick="readNow('book2')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>From the Earth to the Moon</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>A spectator endowed with infinite power of sight, and placed at the unknown centre round which gravitates the universe, would have seen myriads of atoms</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>filling all space during the chaotic epoch of creation. But by degrees, as centuries went on, a change took place; a law of gravitation manifested itself which the wandering atoms</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>combined chemically according to their affinities, formed themselves into molecules, and made those nebulous masses with which the depths of the heavens are strewed.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>These masses were immediately animated by a movement of rotation round their central point. This centre, made of vague molecules, began to turn on itself whilst progressively</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>condensing; then, following the immutable laws of mechanics, in proportion as its volume became diminished by condensation its movement of rotation</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>was accelerated, and these two effects persisting, there resulted a principal planet, the centre of the nebulous mass. By watching attentively the</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>spectator would then have seen other molecules in the mass behave like the central planet, and condense in the same manner by a movement of progressively-accelerated rotation,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>and gravitate round it under the form of innumerable stars. The nebulae, of which astronomers count nearly 5,000 at present, were formed.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Amongst these 5,000 nebulae there is one that men have called the Milky Way, and which contains eighteen millions of stars, each of which has become the centre of a solar.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>If the spectator had then concentrated all his attention on these planets he would have seen them behave exactly like the sun and give birth to one or more cosmic rings.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book2')">Previous</button>
+          <button onclick="nextPage('book2')">Next</button>
+        </div>
+      </div>
+
+      <!-- Book 3 -->
+      <div class="book-container" data-category="Fiction">
+        <div class="book" id="book3">
+          <div class="page">
+            <div class="front cover">
+              <img src="A war that saved my life.jpg" alt="Book 2 Cover">
+              <h3>A war that saved my life</h3>
+              <h4>Kimberly Brubaker</h4>
+              <button onclick="readNow('book3')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>A war that saved my life</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>“Ada! Get back from that window!” Mam’s voice, shouting. Mam’s arm, grabbing mine, yanking me so I toppled off my chair and fell hard to the floor.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>“I was only saying hello to Stephen White.” I knew better than to talk back, but sometimes my mouth was faster than my brain. I’d become a fighter, that summer.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>Mam smacked me. Hard. My head snapped back against the chair leg and for a moment I saw stars. “Don’t you be talkin’ to nobody!” Mam said. “I let you look out that window</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>out a’ the kindness of my heart, but I’ll board it over if you go stickin’ your nose out, much less talkin’ to anyone!”.“Jamie’s out there,” I mumbled.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>“And why shouldn’t he be?” Mam said. “He ain’t a cripple. Not like you. ”I clamped my lips over what I might have said next, and shook my head to clear it.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>Then I saw the smear of blood on the floor. Oh, mercy. I hadn’t cleaned it all up from this afternoon. If Mam saw it, she’d put two and two together, fast.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>Then I’d be in the soup for sure. I slid over until my bottom covered the bloodstain, and I curled my bad foot beneath me.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“You’d better be making my tea,” Mam said. She sat on the edge of the bed and peeled off her stockings, wiggling her two good feet near my face. “I’m off to work in a bit.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>“Yes, Mam.” I pushed my window chair sideways to hide the blood. I crawled across the floor, keeping my scabbed-over bad foot out of Mam’s line of sight.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>I pulled myself onto our second chair, lit the gas ring, and put the kettle on. “Cut me some bread and dripping, Mam said.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book3')">Previous</button>
+          <button onclick="nextPage('book3')">Next</button>
+        </div>
+      </div>
+
+<!-- Book 4 -->
+      <div class="book-container" data-category="Technology">
+        <div class="book" id="book4">
+          <div class="page">
+            <div class="front cover">
+              <img src="The Time Machine.jpg" alt="Book 2 Cover">
+              <h3>The Time Machine</h3>
+              <h4>H. G. Wells</h4>
+              <button onclick="readNow('book4')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>The Time Machine</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>The Time Traveller (for so it will be convenient to speak of him) was expounding a recondite matter to us. His pale grey eyes shone and twinkled, and his usually pale</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>face was flushed and animated. The fire burnt brightly, and the soft radiance of the incandescent lights in the lilies of silver caught the bubbles that flashed and passed in our glasses.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>Our chairs, being his patents, embraced and caressed us rather than submitted to be sat upon, and there was that luxurious after-dinner atmosphere,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>when thought runs gracefully free of the trammels of precision. And he put it to us in this way—marking the points with a lean forefinger—as we sat and lazily</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>admired his earnestness over this new paradox (as we thought it) and his fecundity. “You must follow me carefully. I shall have to controvert</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>one or two ideas that are almost universally accepted. The geometry, for instance, they taught you at school is founded on a misconception.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>“Is not that rather a large thing to expect us to begin upon?” said Filby, an argumentative person with red hair. “I do not mean to ask you to accept anything without reasonable.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>You will soon admit as much as I need from you. You know of course that a mathematical line, a line of thickness nil, has no real existence. They taught you that?</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Filby became pensive. “Clearly,” the Time Traveller proceeded, “any real body must have extension in four directions: it must have Length, Breadth, Thickness, and—Duration.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“Now, it is very remarkable that this is so extensively overlooked,” continued the Time Traveller, with a slight accession of cheerfulness.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book4')">Previous</button>
+          <button onclick="nextPage('book4')">Next</button>
+        </div>
+      </div>
+
+      <!-- Book 5 -->
+      <div class="book-container" data-category="History">
+        <div class="book" id="book5">
+          <div class="page">
+            <div class="front cover">
+              <img src="The Tiles of The Core.jpg" alt="Book 2 Cover">
+              <h3>The Tiles Of The Core</h3>
+              <h4> Michael E. Thies</h4>
+              <button onclick="readNow('book5')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>The Tiles Of The Core</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book5')">Previous</button>
+          <button onclick="nextPage('book5')">Next</button>
+        </div>
+      </div>
+
+
+      <!-- Book 6 -->
+      <div class="book-container" data-category="Fiction">
+        <div class="book" id="book6">
+          <div class="page">
+            <div class="front cover">
+              <img src="To Kill A Mocking Bird.jpeg" alt="Book 2 Cover">
+              <h3>To Kill A monking Bird</h3>
+              <h4> Harper Lee</h4>
+              <button onclick="readNow('book6')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>To Kill A monking Bird</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book6')">Previous</button>
+          <button onclick="nextPage('book6')">Next</button>
+        </div>
+      </div>
+
+
+      <!-- Book 7 -->
+      <div class="book-container" data-category="History">
+        <div class="book" id="book7">
+          <div class="page">
+            <div class="front cover">
+              <img src="The Lord Of The Rings.jpeg" alt="Book 2 Cover">
+              <h3>The Lord Of The Rings</h3>
+              <h4>J. R. R. Tolkien</h4>
+              <button onclick="readNow('book7')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>The Lord Of The Rings</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book7')">Previous</button>
+          <button onclick="nextPage('book7')">Next</button>
+        </div>
+      </div>
+
+
+      <!-- Book 8 -->
+      <div class="book-container" data-category="History">
+        <div class="book" id="book8">
+          <div class="page">
+            <div class="front cover">
+              <img src="SHE,_A_History_of_Adventure.jpg" alt="Book 2 Cover">
+              <h3>She A History Adventure</h3>
+              <h4>H. Rider Haggard</h4>
+              <button onclick="readNow('book8')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>She A History Adventure</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book8')">Previous</button>
+          <button onclick="nextPage('book8')">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 CSK. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function nextPage(bookId) {
+      const book = document.getElementById(bookId);
+      const pages = book.querySelectorAll('.page');
+      let currentPage = book.dataset.currentPage ? parseInt(book.dataset.currentPage) : 0;
+
+      if (currentPage < pages.length) {
+        pages[currentPage].classList.add('flipped');
+        currentPage++;
+      } else {
+        pages.forEach(p => p.classList.remove('flipped'));
+        currentPage = 0;
+        pages[currentPage].classList.add('flipped');
+        currentPage = 1;
+      }
+      book.dataset.currentPage = currentPage;
+    }
+
+    function prevPage(bookId) {
+      const book = document.getElementById(bookId);
+      const pages = book.querySelectorAll('.page');
+      let currentPage = book.dataset.currentPage ? parseInt(book.dataset.currentPage) : 0;
+
+      if (currentPage > 0) {
+        currentPage--;
+        pages[currentPage].classList.remove('flipped');
+      } else {
+        pages.forEach(p => p.classList.add('flipped'));
+        currentPage = pages.length;
+      }
+      book.dataset.currentPage = currentPage;
+    }
+
+    function readNow(bookId) {
+      nextPage(bookId);
+    }
+  </script>
+
+</body>
+</html>

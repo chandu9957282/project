@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration</title>
+  <link rel="icon" type="image/png"
+    href="Student registration.jpeg">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .Chandu {
+      display: flex;
+      background-image: url("Student\ Registration.png");
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: right;
+      background-color: lightblue;
+      gap: 50px;
+    }
+
+    /* 🔹 Student Registration Form Styling */
+    .login-details1 {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .login-details1 h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1a1a2e;
+      font-size: 1.8rem;
+    }
+
+    .login-details1 label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .login-details1 input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .login-details1 input:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 6px rgba(76, 175, 80, 0.4);
+    }
+
+    .login-details1 button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-details1 button:hover {
+      background: #0f3460;
+    }
+  </style>
+</head>
+<body>
+<div class="Chandu">
+  <form class="login-details1" action="register2.html" method="get">
+    <h1>Student Registration</h1>
+
+    <label for="username">Student-Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Register</button>
+  </form>
+
+</div>
+
+</body>
+</html>
