@@ -53,7 +53,7 @@
     #categories h2 { text-align: center; margin-bottom: 10px; }
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(2px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 20px;
     }
     .category {
@@ -146,19 +146,70 @@
     .cover h3 { margin: 10px 0 5px; }
     .cover h4 { margin: 0 0 15px; font-weight: normal; color: #555; }
 
-    footer {
-      background-color: #1a1a2e;
-      color: white;
+     /* Footer */
+    .footer {
+      background: #222;
+      color: #eee;
+      padding: 30px 20px;
       text-align: center;
-      padding: 15px 0;
       margin-top: 40px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .footer-info, .footer-social {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer h3 {
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .footer p {
+      margin: 5px 0;
+    }
+
+    .footer a {
+      display: block;
+      color: #00aced;
+      text-decoration: none;
+      margin: 5px 0;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      color: #1da1f2;
+    }
+
+    .footer a i {
+      margin-right: 8px;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .library { gap: 20px; }
+      .book { width: 150px; height: 200px; }
+      .page img { height: 120px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>ONLINE READING</h1>
+    <h1>📚 BookVerse</h1>
     <nav>
       <a href="#home">Home</a>
       <a href="#categories">Categories</a>
@@ -169,29 +220,43 @@
 
   <!-- Home Section -->
   <section id="home">
-    <h2>Welcome to ONLINE READING</h2>
-    <p>Explore and read thousands of free e-books online.</p>
+    <h2>Your Gateway to Endless Stories</h2>
+    <p>Knowledge and entertainment — all in one place.</p>
   </section>
 
   <!-- Categories Section -->
   <section id="categories">
-    <h2>Categories</h2>
+    <h2>Choose Your Adventure</h2>
     <div class="category-grid">
       <div class="category" onclick="filterBooks('fiction')">Fiction</div>
       <div class="category" onclick="filterBooks('science')">Science</div>
       <div class="category" onclick="filterBooks('history')">History</div>
       <div class="category" onclick="filterBooks('technology')">Technology</div>
+      <div class="category" onclick="filterBooks('adventure')">Adventure</div>
       <div class="category" onclick="filterBooks('all')">All</div>
     </div>
   </section>
 
   <!-- Books Section (Flipbook) -->
   <section id="books">
-    <h2>Featured Books</h2>
+    <h2>Editor’s Picks</h2>
+
+    <!-- Search Bar -->
+  <div style="text-align:center; margin-bottom:20px;">
+    <input 
+      type="text" 
+      id="searchBar" 
+      placeholder="Search books by title or author..." 
+      style="padding:10px; width:60%; border-radius:6px; border:1px solid #ccc; font-size:16px;"
+      onkeyup="searchBooks()"
+    >
+  </div>
+
+
     <div class="library">
       
       <!-- Book 1 -->
-      <div class="book-container" data-category="Fiction">
+      <div class="book-container" data-category="fiction">
         <div class="book" id="book1">
           <div class="page">
             <div class="front cover">
@@ -220,7 +285,7 @@
       </div>
 
       <!-- Book 2 -->
-      <div class="book-container" data-category="Science">
+      <div class="book-container" data-category="science">
         <div class="book" id="book2">
           <div class="page">
             <div class="front cover">
@@ -250,7 +315,7 @@
       </div>
 
       <!-- Book 3 -->
-      <div class="book-container" data-category="Fiction">
+      <div class="book-container" data-category="history">
         <div class="book" id="book3">
           <div class="page">
             <div class="front cover">
@@ -280,7 +345,7 @@
       </div>
 
 <!-- Book 4 -->
-      <div class="book-container" data-category="Technology">
+      <div class="book-container" data-category="technology">
         <div class="book" id="book4">
           <div class="page">
             <div class="front cover">
@@ -310,7 +375,7 @@
       </div>
 
       <!-- Book 5 -->
-      <div class="book-container" data-category="History">
+      <div class="book-container" data-category="history">
         <div class="book" id="book5">
           <div class="page">
             <div class="front cover">
@@ -341,16 +406,16 @@
 
 
       <!-- Book 6 -->
-      <div class="book-container" data-category="Fiction">
+      <div class="book-container" data-category="fiction">
         <div class="book" id="book6">
           <div class="page">
             <div class="front cover">
               <img src="To Kill A Mocking Bird.jpeg" alt="Book 2 Cover">
-              <h3>To Kill A monking Bird</h3>
+              <h3>To Kill A mockingBird</h3>
               <h4> Harper Lee</h4>
               <button onclick="readNow('book6')">Read Now</button>
             </div>
-            <div class="back"><p><b><br><br><br><u>To Kill A monking Bird</u></b></p></div>
+            <div class="back"><p><b><br><br><br><u>To Kill A mockingBird</u></b></p></div>
           </div>
           <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
           <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
@@ -372,7 +437,7 @@
 
 
       <!-- Book 7 -->
-      <div class="book-container" data-category="History">
+      <div class="book-container" data-category="adventure">
         <div class="book" id="book7">
           <div class="page">
             <div class="front cover">
@@ -403,16 +468,16 @@
 
 
       <!-- Book 8 -->
-      <div class="book-container" data-category="History">
+      <div class="book-container" data-category="adventure">
         <div class="book" id="book8">
           <div class="page">
             <div class="front cover">
               <img src="SHE,_A_History_of_Adventure.jpg" alt="Book 2 Cover">
-              <h3>She A History Adventure</h3>
+              <h3>She: A History of Adventure</h3>
               <h4>H. Rider Haggard</h4>
               <button onclick="readNow('book8')">Read Now</button>
             </div>
-            <div class="back"><p><b><br><br><br><u>She A History Adventure</u></b></p></div>
+            <div class="back"><p><b><br><br><br><u>She: A History of Adventure</u></b></p></div>
           </div>
           <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
           <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
@@ -432,11 +497,148 @@
         </div>
       </div>
 
+
+      <!-- Book 9 -->
+      <div class="book-container" data-category="fiction">
+        <div class="book" id="book9">
+          <div class="page">
+            <div class="front cover">
+              <img src="onyx storm.jpg" alt="Book 2 Cover">
+              <h3>Onyx Strom</h3>
+              <h4>Rebecca Yarros</h4>
+              <button onclick="readNow('book9')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>Onyx Strom</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book9')">Previous</button>
+          <button onclick="nextPage('book9')">Next</button>
+        </div>
+      </div>
+
+
+      <!-- Book 10 -->
+      <div class="book-container" data-category="adventure">
+        <div class="book" id="book10">
+          <div class="page">
+            <div class="front cover">
+              <img src="Beautiful Ugly.jpg" alt="Book 2 Cover">
+              <h3>Beautiful Ugly</h3>
+              <h4>Alice Feeney</h4>
+              <button onclick="readNow('book10')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>Beautiful Ugly</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book10')">Previous</button>
+          <button onclick="nextPage('book10')">Next</button>
+        </div>
+      </div>
+
+      <!-- Book 11 -->
+      <div class="book-container" data-category="adventure">
+        <div class="book" id="book11">
+          <div class="page">
+            <div class="front cover">
+              <img src="Dune.jpg" alt="Book 2 Cover">
+              <h3>Dune</h3>
+              <h4>Frank Herbert</h4>
+              <button onclick="readNow('book11')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>Dune</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book11')">Previous</button>
+          <button onclick="nextPage('book11')">Next</button>
+        </div>
+      </div>
+
+      <!-- Book 12 -->
+      <div class="book-container" data-category="science">
+        <div class="book" id="book12">
+          <div class="page">
+            <div class="front cover">
+              <img src="1984.jpg" alt="Book 2 Cover">
+              <h3>1984</h3>
+              <h4>George Orwell</h4>
+              <button onclick="readNow('book12')">Read Now</button>
+            </div>
+            <div class="back"><p><b><br><br><br><u>1984</u></b></p></div>
+          </div>
+          <div class="page"><div class="front"><h5>Page 1</h5><p>Even past midday, Freyr didn’t have much bearing on the stone court. Lord’s Keep was too tall, and the red sun was not even at its zenith yet.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 2</h5><p>In its current position, the two sparring figures produced slender shadows dancing in rhythmic beats of one another. Hydro Paen’s younger brother, Aiton,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 3</h5><p>looked on closely from the shaded portion of the castle walls. Aiton sat in a long chair, held tight by his mother. His mother’s friends were there too—marchionesses from</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 4</h5><p>different provinces of Acquava. Elias Ward, his father’s adored, had also taken a spot amongst the crowd, waiting to tend to any injury. Hydro tried not to focus on them,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 5</h5><p>but every so often he caught himself stealing a gaze, watching for his mother’s eye, which never seemed to look. Mostly Hydro focused on the man in front of him: Korth.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 6</h5><p>His trainer swung his sword upward, forcing Hydro into a backflip. Upon landing, he ducked to avoid another stroke. Using his momentum, Hydro propelled his body forward,</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 7</h5><p>lance in front, attempting to pierce Korth’s seachrome armor. He missed. Back exposed, he tugged on the golden chain attached to his sapphire lance and spun around.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 8</h5><p>“Good reflexes, Prince,” said Korth. His thick moustache bobbed up and down beneath the gap of his seachrome helm. “I do not need your praise, Korth.”</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 9</h5><p>Hydro jabbed his lance forward, but it was batted away. A heavy boot struck his stomach, causing his chest to heave inward. Defeat rang thrice as the lance clattered on the court.</p></div><div class="back"></div></div>
+          <div class="page"><div class="front"><h5>Page 10</h5><p>“You may not need my praise, but you certainly need my help. Your lance skills are still mediocre.” Korth grinned, extending his sea-leather glove, dotted in brine, downed.</p></div><div class="back"></div></div>
+
+        </div>
+        <div class="controls">
+          <button onclick="prevPage('book12')">Previous</button>
+          <button onclick="nextPage('book12')">Next</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 CSK. All rights reserved.</p>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <h3>Contact Us</h3>
+        <p><strong>Phone:</strong> +91 8639267099</p>
+        <p><strong>Address:</strong> 123 Library Street payakaropeta, Andhra Pradesh, India</p>
+      </div>
+      <div class="footer-social">
+        <h3>Follow Us</h3>
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2025 CSK. All rights reserved.</p>
   </footer>
 
   <script>
@@ -456,6 +658,79 @@
       }
       book.dataset.currentPage = currentPage;
     }
+
+    // ========== Book Filter ==========
+function filterBooks(category) {
+  const books = document.querySelectorAll(".book-container");
+  books.forEach(book => {
+    if (category === "all" || book.dataset.category.toLowerCase() === category.toLowerCase()) {
+      book.style.display = "flex"; // show book
+    } else {
+      book.style.display = "none"; // hide book
+    }
+  });
+}
+
+
+ // ========== Book Search ==========
+  function searchBooks() {
+  const input = document.getElementById("searchBar").value.toLowerCase();
+  const books = document.querySelectorAll(".book-container");
+
+  books.forEach(book => {
+    const title = book.querySelector(".cover h3").innerText.toLowerCase();
+    const author = book.querySelector(".cover h4").innerText.toLowerCase();
+
+    if (title.includes(input) || author.includes(input)) {
+      book.style.display = "flex"; // show matching book
+    } else {
+      book.style.display = "none"; // hide non-matching
+    }
+  });
+}
+
+// ========== Book Slider ==========
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".book-container").forEach(container => {
+    const pages = container.querySelectorAll(".page");
+    let currentPage = 0;
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        page.classList.remove("active");
+        if (i === index) {
+          page.classList.add("active");
+        }
+      });
+    }
+
+    const prevBtn = container.querySelector(".prev");
+    const nextBtn = container.querySelector(".next");
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 0) {
+          currentPage--;
+          showPage(currentPage);
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < pages.length - 1) {
+          currentPage++;
+          showPage(currentPage);
+        }
+      });
+    }
+
+
+    // show first page when loaded
+    showPage(currentPage);
+  });
+});
+
 
     function prevPage(bookId) {
       const book = document.getElementById(bookId);
